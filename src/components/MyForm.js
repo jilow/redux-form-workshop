@@ -14,14 +14,14 @@ const MyForm = ({ state, dispatch }) => {
   }
 
   const createFields = (obj, prefix) => {
-    return Object.keys(obj).map(key => createField(`${prefix}.${key}`))
+    return Object.keys(obj).map(key => createField(key, prefix))
   }
 
-  const createField = (key) => (
-    <div key={ key }>
-      <label>{ key }: </label>
+  const createField = (key, prefix) => (
+    <div key={ prefix + key }>
+      <label>{ prefix } { key }: </label>
       <Field
-        name={ key }
+        name={ `${prefix}.${key}` }
         component="input"
         placeholder={ key }
       />

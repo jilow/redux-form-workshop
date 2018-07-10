@@ -2,8 +2,8 @@ import * as constants from '../constants'
 
 const DEFAULT_DOMAIN_STATE = {
   owner: {
-    name: 'Owner',
-    email: 'owner@example.com',
+    name: 'Papa John',
+    email: 'email@example.com',
   },
   admin: {
     name: '',
