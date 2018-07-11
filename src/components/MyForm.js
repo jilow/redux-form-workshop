@@ -19,23 +19,44 @@ const MyForm = ({ state, dispatch }) => {
 
   const createField = (key, prefix) => (
     <div key={ prefix + key }>
-      <label>{ prefix } { key }: </label>
-      <Field
-        name={ `${prefix}.${key}` }
-        component="input"
-        placeholder={ key }
-      />
+      <Field name={ `${prefix}.${key}` } validate={ mustBeText }>
+        {({ input, meta }) => (
+          <div>
+            <label>{ prefix } { key }: </label>
+            <input {...input} type="text" placeholder={ key } />
+            {meta.error && meta.touched && <span>{meta.error}</span>}
+          </div>
+        )}
+      </Field>
     </div>
   )
+
+  const validation = () => ({
+    admin: {
+      email: {
+        validator: mustBeText,
+        message: "Email must be text"
+      }
+    }
+  })
+
+  const mustBeText = value => (/\w+/g.test(value) ? undefined : "Must be a word")
+
+  const required = value => (value ? false : "Required")
 
   const isEmpty = (obj) => {
     return Object.values(obj).every(val => !val)
   }
 
+  const validateForm = (values) => {
+    console.log(values)
+  }
+
   return (
-    <Form
+    <Form 
       onSubmit={ onSubmit }
       initialValues={ state.domain }
+      validate={ validateForm }
       render={({ handleSubmit, pristine, reset, submitting, values }) => {
         return (
           <form onSubmit={ handleSubmit }>
